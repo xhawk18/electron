@@ -803,7 +803,6 @@ describe('asar package', function () {
   })
 
   describe('asar protocol', function () {
-    var url = require('url')
     var w = null
 
     afterEach(function () {
@@ -864,16 +863,11 @@ describe('asar package', function () {
         height: 400
       })
       var p = path.resolve(fixtures, 'asar', 'web.asar', 'index.html')
-      var u = url.format({
-        protocol: 'file',
-        slashed: true,
-        pathname: p
-      })
       ipcMain.once('dirname', function (event, dirname) {
         assert.equal(dirname, path.dirname(p))
         done()
       })
-      w.loadURL(u)
+      w.loadFile(p)
     })
 
     it('loads script tag in html', function (done) {
@@ -887,12 +881,7 @@ describe('asar package', function () {
         height: 400
       })
       var p = path.resolve(fixtures, 'asar', 'script.asar', 'index.html')
-      var u = url.format({
-        protocol: 'file',
-        slashed: true,
-        pathname: p
-      })
-      w.loadURL(u)
+      w.loadFile(p)
       ipcMain.once('ping', function (event, message) {
         assert.equal(message, 'pong')
         done()
@@ -912,12 +901,7 @@ describe('asar package', function () {
         height: 400
       })
       var p = path.resolve(fixtures, 'asar', 'video.asar', 'index.html')
-      var u = url.format({
-        protocol: 'file',
-        slashed: true,
-        pathname: p
-      })
-      w.loadURL(u)
+      w.loadFile(p)
       ipcMain.on('asar-video', function (event, message, error) {
         if (message === 'ended') {
           assert(!error)

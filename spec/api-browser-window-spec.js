@@ -147,12 +147,12 @@ describe('BrowserWindow module', () => {
         assert.equal(String(content), 'unload')
         done()
       })
-      w.loadURL('file://' + path.join(fixtures, 'api', 'unload.html'))
+      w.loadFile(path.join(fixtures, 'api', 'unload.html'))
     })
     it('should emit beforeunload handler', (done) => {
       w.once('onbeforeunload', () => { done() })
       w.webContents.on('did-finish-load', () => { w.close() })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'beforeunload-false.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'beforeunload-false.html'))
     })
     it('should not crash when invoked synchronously inside navigation observer', (done) => {
       const events = [
@@ -196,11 +196,11 @@ describe('BrowserWindow module', () => {
         assert.equal(String(content), 'close')
         done()
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'close.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'close.html'))
     })
     it('should emit beforeunload handler', (done) => {
       w.once('onbeforeunload', () => { done() })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'close-beforeunload-false.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'close-beforeunload-false.html'))
     })
   })
 
@@ -245,7 +245,7 @@ describe('BrowserWindow module', () => {
         assert.equal(resourceType, expectedType, 'Incorrect resourceType')
         if (responses === Object.keys(expectedResources).length) done()
       })
-      w.loadURL(`file://${path.join(fixtures, 'pages', 'did-get-response-details.html')}`)
+      w.loadFile(path.join(fixtures, 'pages', 'did-get-response-details.html'))
     })
     it('should emit did-fail-load event for files that do not exist', (done) => {
       w.webContents.on('did-fail-load', (event, code, desc, url, isMainFrame) => {
@@ -270,7 +270,7 @@ describe('BrowserWindow module', () => {
         assert.equal(isMainFrame, false)
         done()
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'did-fail-load-iframe.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'did-fail-load-iframe.html'))
     })
     it('does not crash in did-fail-provisional-load handler', (done) => {
       w.webContents.once('did-fail-provisional-load', () => {
@@ -349,7 +349,7 @@ describe('BrowserWindow module', () => {
     it('allows the window to be closed from the event listener', (done) => {
       ipcRenderer.send('close-on-will-navigate', w.id)
       ipcRenderer.once('closed-on-will-navigate', () => { done() })
-      w.loadURL(`file://${fixtures}/pages/will-navigate.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'will-navigate.html'))
     })
   })
 
@@ -1063,7 +1063,7 @@ describe('BrowserWindow module', () => {
             preload: preload
           }
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'preload.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'preload.html'))
       })
       it('can successfully delete the Buffer global', (done) => {
         const preload = path.join(fixtures, 'module', 'delete-buffer.js')
@@ -1078,7 +1078,7 @@ describe('BrowserWindow module', () => {
             preload: preload
           }
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'preload.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'preload.html'))
       })
     })
 
@@ -1115,7 +1115,7 @@ describe('BrowserWindow module', () => {
             preload: path.join(fixtures, 'module', 'set-global-preload-3.js')
           }
         })
-        w.loadURL('file://' + path.join(fixtures, 'api', 'preloads.html'))
+        w.loadFile(path.join(fixtures, 'api', 'preloads.html'))
       })
     })
 
@@ -1134,7 +1134,7 @@ describe('BrowserWindow module', () => {
             additionalArguments: ['--my-magic-arg']
           }
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'blank.html'))
       })
 
       it('adds extra value args to process.argv in the renderer process', (done) => {
@@ -1151,7 +1151,7 @@ describe('BrowserWindow module', () => {
             additionalArguments: ['--my-magic-arg=foo']
           }
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'blank.html'))
       })
     })
 
@@ -1171,7 +1171,7 @@ describe('BrowserWindow module', () => {
             nodeIntegration: false
           }
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'blank.html'))
       })
     })
 
@@ -1223,7 +1223,7 @@ describe('BrowserWindow module', () => {
             preload: preload
           }
         })
-        w.loadURL('file://' + path.join(fixtures, 'api', 'preload.html'))
+        w.loadFile(path.join(fixtures, 'api', 'preload.html'))
       })
 
       it('exposes ipcRenderer to preload script (path has special chars)', function (done) {
@@ -1240,7 +1240,7 @@ describe('BrowserWindow module', () => {
             preload: preloadSpecialChars
           }
         })
-        w.loadURL('file://' + path.join(fixtures, 'api', 'preload.html'))
+        w.loadFile(path.join(fixtures, 'api', 'preload.html'))
       })
 
       it('exposes "exit" event to preload script', function (done) {
@@ -1254,7 +1254,7 @@ describe('BrowserWindow module', () => {
         })
         let htmlPath = path.join(fixtures, 'api', 'sandbox.html?exit-event')
         const pageUrl = 'file://' + htmlPath
-        w.loadURL(pageUrl)
+        w.loadFile(htmlPath)
         ipcMain.once('answer', function (event, url) {
           let expectedUrl = pageUrl
           if (process.platform === 'win32') {
@@ -1277,7 +1277,7 @@ describe('BrowserWindow module', () => {
         ipcRenderer.send('set-web-preferences-on-next-new-window', w.webContents.id, 'preload', preload)
         let htmlPath = path.join(fixtures, 'api', 'sandbox.html?window-open')
         const pageUrl = 'file://' + htmlPath
-        w.loadURL(pageUrl)
+        w.loadFile(htmlPath)
         w.webContents.once('new-window', (e, url, frameName, disposition, options) => {
           let expectedUrl = pageUrl
           if (process.platform === 'win32') {
@@ -1305,9 +1305,8 @@ describe('BrowserWindow module', () => {
         })
         ipcRenderer.send('set-web-preferences-on-next-new-window', w.webContents.id, 'preload', preload)
         let htmlPath = path.join(fixtures, 'api', 'sandbox.html?window-open-external')
-        const pageUrl = 'file://' + htmlPath
         let popupWindow
-        w.loadURL(pageUrl)
+        w.loadFile(htmlPath)
         w.webContents.once('new-window', (e, url, frameName, disposition, options) => {
           assert.equal(url, 'http://www.google.com/#q=electron')
           assert.equal(options.width, 505)
@@ -1348,7 +1347,7 @@ describe('BrowserWindow module', () => {
           assert.equal(args.includes('--enable-sandbox'), true)
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'new-window.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'new-window.html'))
       })
 
       it('should open windows with the options configured via new-window event listeners', (done) => {
@@ -1367,7 +1366,7 @@ describe('BrowserWindow module', () => {
           assert.equal(webPreferences.foo, 'bar')
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'new-window.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'new-window.html'))
       })
 
       it('should set ipc event sender correctly', (done) => {
@@ -1380,8 +1379,7 @@ describe('BrowserWindow module', () => {
           }
         })
         let htmlPath = path.join(fixtures, 'api', 'sandbox.html?verify-ipc-sender')
-        const pageUrl = 'file://' + htmlPath
-        w.loadURL(pageUrl)
+        w.loadFile(htmlPath)
         w.webContents.once('new-window', (e, url, frameName, disposition, options) => {
           let parentWc = w.webContents
           let childWc = options.webContents
@@ -1488,7 +1486,7 @@ describe('BrowserWindow module', () => {
             done()
           }, 100)
         })
-        w.loadURL('file://' + path.join(fixtures, 'pages', 'window-open.html'))
+        w.loadFile(path.join(fixtures, 'pages', 'window-open.html'))
       })
 
       it('releases memory after popup is closed', (done) => {
@@ -1594,7 +1592,7 @@ describe('BrowserWindow module', () => {
             preload: preload
           }
         })
-        w.loadURL('file://' + path.join(fixtures, 'api', 'preload.html'))
+        w.loadFile(path.join(fixtures, 'api', 'preload.html'))
       })
     })
 
@@ -1614,28 +1612,28 @@ describe('BrowserWindow module', () => {
           assert.equal(content, 'Hello')
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'native-window-open-blank.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'native-window-open-blank.html'))
       })
       it('opens window of same domain with cross-scripting enabled', (done) => {
         ipcMain.once('answer', (event, content) => {
           assert.equal(content, 'Hello')
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'native-window-open-file.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'native-window-open-file.html'))
       })
       it('blocks accessing cross-origin frames', (done) => {
         ipcMain.once('answer', (event, content) => {
           assert.equal(content, 'Blocked a frame with origin "file://" from accessing a cross-origin frame.')
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'native-window-open-cross-origin.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'native-window-open-cross-origin.html'))
       })
       it('opens window from <iframe> tags', (done) => {
         ipcMain.once('answer', (event, content) => {
           assert.equal(content, 'Hello')
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'native-window-open-iframe.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'native-window-open-iframe.html'))
       })
       it('loads native addons correctly after reload', (done) => {
         if (!nativeModulesEnabled) return done()
@@ -1648,7 +1646,7 @@ describe('BrowserWindow module', () => {
           })
           w.reload()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'native-window-open-native-addon.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'native-window-open-native-addon.html'))
       })
       it('should inherit the nativeWindowOpen setting in opened windows', (done) => {
         w.destroy()
@@ -1665,7 +1663,7 @@ describe('BrowserWindow module', () => {
           assert.equal(args.includes('--native-window-open'), true)
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'new-window.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'new-window.html'))
       })
       it('should open windows with the options configured via new-window event listeners', (done) => {
         w.destroy()
@@ -1683,7 +1681,7 @@ describe('BrowserWindow module', () => {
           assert.equal(webPreferences.foo, 'bar')
           done()
         })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'new-window.html')}`)
+        w.loadFile(path.join(fixtures, 'api', 'new-window.html'))
       })
       it('retains the original web preferences when window.location is changed to a new origin', async () => {
         await serveFileFromProtocol('foo', path.join(fixtures, 'api', 'window-open-location-change.html'))
@@ -1706,7 +1704,7 @@ describe('BrowserWindow module', () => {
             assert.equal(typeofProcess, 'undefined')
             resolve()
           })
-          w.loadURL(`file://${path.join(fixtures, 'api', 'window-open-location-open.html')}`)
+          w.loadFile(path.join(fixtures, 'api', 'window-open-location-open.html'))
         })
       })
     })
@@ -1730,22 +1728,22 @@ describe('BrowserWindow module', () => {
         assert.equal(content, 'Hello')
         done()
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'native-window-open-isolated.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'native-window-open-isolated.html'))
     })
   })
 
   describe('beforeunload handler', () => {
     it('returning undefined would not prevent close', (done) => {
       w.once('closed', () => { done() })
-      w.loadURL('file://' + path.join(fixtures, 'api', 'close-beforeunload-undefined.html'))
+      w.loadFile(path.join(fixtures, 'api', 'close-beforeunload-undefined.html'))
     })
     it('returning false would prevent close', (done) => {
       w.once('onbeforeunload', () => { done() })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'close-beforeunload-false.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'close-beforeunload-false.html'))
     })
     it('returning empty string would prevent close', (done) => {
       w.once('onbeforeunload', () => { done() })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'close-beforeunload-empty-string.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'close-beforeunload-empty-string.html'))
     })
     it('emits for each close attempt', (done) => {
       let beforeUnloadCount = 0
@@ -1758,7 +1756,7 @@ describe('BrowserWindow module', () => {
         }
       })
       w.webContents.once('did-finish-load', () => { w.close() })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'beforeunload-false-prevent3.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'beforeunload-false-prevent3.html'))
     })
     it('emits for each reload attempt', (done) => {
       let beforeUnloadCount = 0
@@ -1776,7 +1774,7 @@ describe('BrowserWindow module', () => {
         })
         w.reload()
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'beforeunload-false-prevent3.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'beforeunload-false-prevent3.html'))
     })
     it('emits for each navigation attempt', (done) => {
       let beforeUnloadCount = 0
@@ -1794,7 +1792,7 @@ describe('BrowserWindow module', () => {
         })
         w.loadURL('about:blank')
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'beforeunload-false-prevent3.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'beforeunload-false-prevent3.html'))
     })
   })
 
@@ -1835,7 +1833,7 @@ describe('BrowserWindow module', () => {
         done()
       })
 
-      w.loadURL(`file://${path.join(fixtures, 'pages', 'visibilitychange.html')}`)
+      w.loadFile(path.join(fixtures, 'pages', 'visibilitychange.html'))
     })
     it('visibilityState changes when window is hidden', (done) => {
       w = new BrowserWindow({width: 100, height: 100})
@@ -1853,7 +1851,7 @@ describe('BrowserWindow module', () => {
         w.hide()
       })
 
-      w.loadURL(`file://${path.join(fixtures, 'pages', 'visibilitychange.html')}`)
+      w.loadFile(path.join(fixtures, 'pages', 'visibilitychange.html'))
     })
     it('visibilityState changes when window is shown', (done) => {
       w = new BrowserWindow({width: 100, height: 100})
@@ -1870,7 +1868,7 @@ describe('BrowserWindow module', () => {
         w.show()
       })
 
-      w.loadURL(`file://${path.join(fixtures, 'pages', 'visibilitychange.html')}`)
+      w.loadFile(path.join(fixtures, 'pages', 'visibilitychange.html'))
     })
     it('visibilityState changes when window is shown inactive', function (done) {
       if (isCI && process.platform === 'win32') {
@@ -1896,7 +1894,7 @@ describe('BrowserWindow module', () => {
         w.showInactive()
       })
 
-      w.loadURL(`file://${path.join(fixtures, 'pages', 'visibilitychange.html')}`)
+      w.loadFile(path.join(fixtures, 'pages', 'visibilitychange.html'))
     })
     it('visibilityState changes when window is minimized', function (done) {
       if (isCI && process.platform === 'linux') {
@@ -1923,7 +1921,7 @@ describe('BrowserWindow module', () => {
         w.minimize()
       })
 
-      w.loadURL(`file://${path.join(fixtures, 'pages', 'visibilitychange.html')}`)
+      w.loadFile(path.join(fixtures, 'pages', 'visibilitychange.html'))
     })
     it('visibilityState remains visible if backgroundThrottling is disabled', (done) => {
       w = new BrowserWindow({
@@ -1955,7 +1953,7 @@ describe('BrowserWindow module', () => {
       })
       w.show()
 
-      w.loadURL(`file://${path.join(fixtures, 'pages', 'visibilitychange.html')}`)
+      w.loadFile(path.join(fixtures, 'pages', 'visibilitychange.html'))
     })
   })
 
@@ -1974,7 +1972,7 @@ describe('BrowserWindow module', () => {
         assert.equal(additionalFeatures[0], 'this-is-not-a-standard-feature')
         done()
       })
-      w.loadURL(`file://${fixtures}/pages/window-open.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'window-open.html'))
     })
     it('emits when window.open is called with no webPreferences', (done) => {
       w.destroy()
@@ -1986,8 +1984,9 @@ describe('BrowserWindow module', () => {
         assert.equal(additionalFeatures[0], 'this-is-not-a-standard-feature')
         done()
       })
-      w.loadURL(`file://${fixtures}/pages/window-open.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'window-open.html'))
     })
+
     it('emits when link with target is called', (done) => {
       w.webContents.once('new-window', (e, url, frameName) => {
         e.preventDefault()
@@ -1995,7 +1994,7 @@ describe('BrowserWindow module', () => {
         assert.equal(frameName, 'target')
         done()
       })
-      w.loadURL(`file://${fixtures}/pages/target-name.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'target-name.html'))
     })
   })
 
@@ -2095,7 +2094,7 @@ describe('BrowserWindow module', () => {
 
     it('subscribes to frame updates', (done) => {
       let called = false
-      w.loadURL(`file://${fixtures}/api/frame-subscriber.html`)
+      w.loadFile(path.join(fixtures, 'api', 'frame-subscriber.html'))
       w.webContents.on('dom-ready', () => {
         w.webContents.beginFrameSubscription(function (data) {
           // This callback might be called twice.
@@ -2110,7 +2109,7 @@ describe('BrowserWindow module', () => {
     })
     it('subscribes to frame updates (only dirty rectangle)', (done) => {
       let called = false
-      w.loadURL(`file://${fixtures}/api/frame-subscriber.html`)
+      w.loadFile(path.join(fixtures, 'api', 'frame-subscriber.html'))
       w.webContents.on('dom-ready', () => {
         w.webContents.beginFrameSubscription(true, (data) => {
           // This callback might be called twice.
@@ -2124,7 +2123,7 @@ describe('BrowserWindow module', () => {
       })
     })
     it('throws error when subscriber is not well defined', (done) => {
-      w.loadURL(`file://${fixtures}'/api/frame-subscriber.html`)
+      w.loadFile(path.join(fixtures, 'api', 'frame-subscriber.html'))
       try {
         w.webContents.beginFrameSubscription(true, true)
       } catch (e) {
@@ -2161,7 +2160,7 @@ describe('BrowserWindow module', () => {
           done()
         })
       })
-      w.loadURL('file://' + fixtures + '/pages/save_page/index.html')
+      w.loadFile(path.join(fixtures, 'pages', 'save_page', 'index.html'))
     })
   })
 
@@ -3083,7 +3082,7 @@ describe('BrowserWindow module', () => {
         assert.deepEqual(data, expectedContextData)
         done()
       })
-      w.loadURL(`file://${fixtures}/api/isolated.html`)
+      w.loadFile(path.join(fixtures, 'api', 'isolated.html'))
     })
     it('recreates the contexts on reload', (done) => {
       w.webContents.once('did-finish-load', () => {
@@ -3093,21 +3092,21 @@ describe('BrowserWindow module', () => {
         })
         w.webContents.reload()
       })
-      w.loadURL(`file://${fixtures}/api/isolated.html`)
+      w.loadFile(path.join(fixtures, 'api', 'isolated.html'))
     })
     it('enables context isolation on child windows', (done) => {
       app.once('browser-window-created', (event, window) => {
         assert.equal(window.webContents.getLastWebPreferences().contextIsolation, true)
         done()
       })
-      w.loadURL(`file://${fixtures}/pages/window-open.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'window-open.html'))
     })
     it('separates the page context from the Electron/preload context with sandbox on', (done) => {
       ipcMain.once('isolated-sandbox-world', (event, data) => {
         assert.deepEqual(data, expectedContextData)
         done()
       })
-      w.loadURL(`file://${fixtures}/api/isolated.html`)
+      w.loadFile(path.join(fixtures, 'api', 'isolated.html'))
     })
     it('recreates the contexts on reload with sandbox on', (done) => {
       w.webContents.once('did-finish-load', () => {
@@ -3117,7 +3116,7 @@ describe('BrowserWindow module', () => {
         })
         w.webContents.reload()
       })
-      w.loadURL(`file://${fixtures}/api/isolated.html`)
+      w.loadFile(path.join(fixtures, 'api', 'isolated.html'))
     })
   })
 
@@ -3149,12 +3148,12 @@ describe('BrowserWindow module', () => {
         assertWithinDelta(size.height, 100, 2, 'height')
         done()
       })
-      w.loadURL('file://' + fixtures + '/api/offscreen-rendering.html')
+      w.loadFile(path.join(fixtures, 'api', 'offscreen-rendering.html'))
     })
 
     describe('window.webContents.isOffscreen()', () => {
       it('is true for offscreen type', () => {
-        w.loadURL('file://' + fixtures + '/api/offscreen-rendering.html')
+        w.loadFile(path.join(fixtures, 'api', 'offscreen-rendering.html'))
         assert.equal(w.webContents.isOffscreen(), true)
       })
 
@@ -3171,7 +3170,7 @@ describe('BrowserWindow module', () => {
           assert.equal(w.webContents.isPainting(), true)
           done()
         })
-        w.loadURL('file://' + fixtures + '/api/offscreen-rendering.html')
+        w.loadFile(path.join(fixtures, 'api', 'offscreen-rendering.html'))
       })
     })
 
@@ -3182,7 +3181,7 @@ describe('BrowserWindow module', () => {
           assert.equal(w.webContents.isPainting(), false)
           done()
         })
-        w.loadURL('file://' + fixtures + '/api/offscreen-rendering.html')
+        w.loadFile(path.join(fixtures, 'api', 'offscreen-rendering.html'))
       })
     })
 
@@ -3196,7 +3195,7 @@ describe('BrowserWindow module', () => {
             done()
           })
         })
-        w.loadURL('file://' + fixtures + '/api/offscreen-rendering.html')
+        w.loadFile(path.join(fixtures, 'api', 'offscreen-rendering.html'))
       })
     })
 
@@ -3206,7 +3205,7 @@ describe('BrowserWindow module', () => {
           assert.equal(w.webContents.getFrameRate(), 60)
           done()
         })
-        w.loadURL('file://' + fixtures + '/api/offscreen-rendering.html')
+        w.loadFile(path.join(fixtures, 'api', 'offscreen-rendering.html'))
       })
     })
 
@@ -3219,7 +3218,7 @@ describe('BrowserWindow module', () => {
             done()
           })
         })
-        w.loadURL('file://' + fixtures + '/api/offscreen-rendering.html')
+        w.loadFile(path.join(fixtures, 'api', 'offscreen-rendering.html'))
       })
     })
   })

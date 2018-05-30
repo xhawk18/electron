@@ -24,7 +24,7 @@ describe('BrowserWindow with affinity module', () => {
       w.webContents.on('did-finish-load', () => {
         resolve(w)
       })
-      w.loadURL('file://' + path.join(fixtures, 'api', 'blank.html'))
+      w.loadFile(path.join(fixtures, 'api', 'blank.html'))
     })
   }
 

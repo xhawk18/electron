@@ -29,7 +29,7 @@ describe('debugger module', () => {
           done()
         }
       })
-      w.webContents.loadURL(`file://${path.join(fixtures, 'pages', 'a.html')}`)
+      w.webContents.loadFile(path.join(fixtures, 'pages', 'a.html'))
     })
 
     it('fails when protocol version is not supported', (done) => {
@@ -102,7 +102,7 @@ describe('debugger module', () => {
       const url = process.platform !== 'win32'
         ? `file://${path.join(fixtures, 'pages', 'a.html')}`
         : 'file:///' + path.join(fixtures, 'pages', 'a.html').replace(/\\/g, '/')
-      w.webContents.loadURL(url)
+      w.webContents.loadFile(path.join(fixtures, 'pages', 'a.html'))
       try {
         w.webContents.debugger.attach()
       } catch (err) {

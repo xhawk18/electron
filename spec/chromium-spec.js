@@ -122,7 +122,7 @@ describe('chromium feature', () => {
           })
         }
       })
-      w.loadURL(`file://${fixtures}/pages/media-id-reset.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'media-id-reset.html'))
     })
   })
 
@@ -161,7 +161,7 @@ describe('chromium feature', () => {
         }
       })
       w.webContents.on('crashed', () => done(new Error('WebContents crashed.')))
-      w.loadURL(`file://${fixtures}/pages/service-worker/index.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'service-worker', 'index.html'))
     })
 
     it('should register for intercepted file scheme', (done) => {
@@ -199,7 +199,7 @@ describe('chromium feature', () => {
         }
       })
       w.webContents.on('crashed', () => done(new Error('WebContents crashed.')))
-      w.loadURL(`file://${fixtures}/pages/service-worker/index.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'service-worker', 'index.html'))
     })
   })
 
@@ -252,7 +252,7 @@ describe('chromium feature', () => {
           w.close()
           done()
         })
-        w.loadURL(`file://${fixtures}/pages/window-open.html`)
+        w.loadFile(path.join(fixtures, 'pages', 'window-open.html'))
       })
     }
 
@@ -372,7 +372,7 @@ describe('chromium feature', () => {
 
     it('handles cycles when merging the parent options into the child options', (done) => {
       w = BrowserWindow.fromId(ipcRenderer.sendSync('create-window-with-options-cycle'))
-      w.loadURL(`file://${fixtures}/pages/window-open.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'window-open.html'))
       w.webContents.once('new-window', (event, url, frameName, disposition, options) => {
         assert.equal(options.show, false)
         assert.deepEqual(options.foo, {
@@ -489,15 +489,13 @@ describe('chromium feature', () => {
   })
 
   describe('window.opener', () => {
-    let url = `file://${fixtures}/pages/window-opener.html`
-
     it('is null for main window', (done) => {
       w = new BrowserWindow({ show: false })
       w.webContents.once('ipc-message', (event, args) => {
         assert.deepEqual(args, ['opener', null])
         done()
       })
-      w.loadURL(url)
+      w.loadFile(path.join(fixtures, 'pages', 'window-opener.html'))
     })
 
     it('is not null for window opened by window.open', (done) => {
@@ -1077,7 +1075,7 @@ describe('chromium feature', () => {
           assert.equal(parsedURL.query.src, pagePath)
           assert.equal(w.webContents.getTitle(), 'cat.pdf')
         })
-        w.webContents.loadURL(pagePath)
+        w.loadFile(path.join(fixtures, 'pages', page))
       }
     })
 

@@ -23,7 +23,7 @@ describe('ipc main module', () => {
         event.returnValue = null
         done()
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'send-sync-message.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'send-sync-message.html'))
     })
 
     it('does not crash when reply is sent by multiple listeners', (done) => {
@@ -35,7 +35,7 @@ describe('ipc main module', () => {
         event.returnValue = null
         done()
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'send-sync-message.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'send-sync-message.html'))
     })
   })
 
@@ -72,7 +72,7 @@ describe('ipc main module', () => {
         done()
       })
 
-      w.loadURL(`file://${path.join(fixtures, 'api', 'render-view-deleted.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'render-view-deleted.html'))
     })
   })
 })

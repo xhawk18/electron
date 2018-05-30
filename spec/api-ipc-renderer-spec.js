@@ -148,7 +148,7 @@ describe('ipc renderer module', () => {
         ipcRenderer.sendTo(contents.id, 'ping', webContentsId)
       })
 
-      contents.loadURL(`file://${path.join(fixtures, 'pages', 'ping-pong.html')}`)
+      contents.loadFile(path.join(fixtures, 'pages', 'ping-pong.html'))
     })
   })
 
@@ -173,7 +173,7 @@ describe('ipc renderer module', () => {
         })
         w.webContents.reload()
       })
-      w.loadURL(`file://${path.join(fixtures, 'api', 'remote-event-handler.html')}`)
+      w.loadFile(path.join(fixtures, 'api', 'remote-event-handler.html'))
     })
   })
 

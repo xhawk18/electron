@@ -54,7 +54,7 @@ describe('<webview> tag', function () {
   it('works without script tag in page', (done) => {
     w = new BrowserWindow({show: false})
     ipcMain.once('pong', () => done())
-    w.loadURL('file://' + fixtures + '/pages/webview-no-script.html')
+    w.loadFile(path.join(fixtures, 'pages', 'webview-no-script.html'))
   })
 
   it('is disabled when nodeIntegration is disabled', (done) => {
@@ -72,7 +72,7 @@ describe('<webview> tag', function () {
         done('WebView still exists')
       }
     })
-    w.loadURL(`file://${fixtures}/pages/webview-no-script.html`)
+    w.loadFile(path.join(fixtures, 'pages', 'webview-no-script.html'))
   })
 
   it('is enabled when the webviewTag option is enabled and the nodeIntegration option is disabled', (done) => {
@@ -91,7 +91,7 @@ describe('<webview> tag', function () {
         done('WebView is not created')
       }
     })
-    w.loadURL(`file://${fixtures}/pages/webview-no-script.html`)
+    w.loadFile(path.join(fixtures, 'pages', 'webview-no-script.html'))
   })
 
   describe('src attribute', () => {
@@ -1110,7 +1110,7 @@ describe('<webview> tag', function () {
         }
       })
 
-      w.loadURL(`file://${fixtures}/pages/webview-visibilitychange.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-visibilitychange.html'))
     })
 
     it('inherits the parent window visibility state and receives visibilitychange events', (done) => {
@@ -1127,7 +1127,7 @@ describe('<webview> tag', function () {
         })
         w.webContents.emit('-window-visibility-change', 'visible')
       })
-      w.loadURL(`file://${fixtures}/pages/webview-visibilitychange.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-visibilitychange.html'))
     })
   })
 
@@ -1174,7 +1174,7 @@ describe('<webview> tag', function () {
           done()
         })
       })
-      w.loadURL(`file://${fixtures}/pages/webview-did-attach-event.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-did-attach-event.html'))
     })
   })
 
@@ -1185,7 +1185,7 @@ describe('<webview> tag', function () {
     const extensionPath = path.join(__dirname, 'fixtures', 'devtools-extensions', 'foo')
     BrowserWindow.addDevToolsExtension(extensionPath)
 
-    w.loadURL(`file://${fixtures}/pages/webview-devtools.html`)
+    w.loadFile(path.join(fixtures, 'pages', 'webview-devtools.html'))
 
     ipcMain.once('answer', (event, message) => {
       assert.equal(message.runtimeId, 'foo')
@@ -1359,7 +1359,7 @@ describe('<webview> tag', function () {
 
           w.webContents.send('guestinstance', instance)
         })
-        w.loadURL(`file://${fixtures}/pages/webview-move-to-window.html`)
+        w.loadFile(path.join(fixtures, 'pages', 'webview-move-to-window.html'))
       }
       webview.addEventListener('did-finish-load', loadListener, {once: true})
       webview.src = `file://${fixtures}/api/blank.html`
@@ -1474,7 +1474,7 @@ describe('<webview> tag', function () {
 
     it('resizes guest when attribute is not present', (done) => {
       w = new BrowserWindow({show: false, width: 200, height: 200})
-      w.loadURL(`file://${fixtures}/pages/webview-guest-resize.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-guest-resize.html'))
 
       w.webContents.once('did-finish-load', () => {
         const CONTENT_SIZE = 300
@@ -1503,7 +1503,7 @@ describe('<webview> tag', function () {
 
     it('does not resize guest when attribute is present', done => {
       w = new BrowserWindow({show: false, width: 200, height: 200})
-      w.loadURL(`file://${fixtures}/pages/webview-no-guest-resize.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-no-guest-resize.html'))
 
       w.webContents.once('did-finish-load', () => {
         const CONTENT_SIZE = 300
@@ -1536,7 +1536,7 @@ describe('<webview> tag', function () {
 
     it('dispatches element resize event even when attribute is present', done => {
       w = new BrowserWindow({show: false, width: 200, height: 200})
-      w.loadURL(`file://${fixtures}/pages/webview-no-guest-resize.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-no-guest-resize.html'))
 
       w.webContents.once('did-finish-load', () => {
         const CONTENT_SIZE = 300
@@ -1552,7 +1552,7 @@ describe('<webview> tag', function () {
 
     it('can be manually resized with setSize even when attribute is present', function (done) {
       w = new BrowserWindow({show: false, width: 200, height: 200})
-      w.loadURL(`file://${fixtures}/pages/webview-no-guest-resize.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-no-guest-resize.html'))
 
       w.webContents.once('did-finish-load', () => {
         const GUEST_WIDTH = 10
@@ -1607,7 +1607,7 @@ describe('<webview> tag', function () {
         assert.equal(zoomLevel, 1)
         done()
       })
-      w.loadURL(`file://${fixtures}/pages/webview-zoom-factor.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-zoom-factor.html'))
     })
 
     it('maintains zoom level on navigation', (done) => {
@@ -1627,7 +1627,7 @@ describe('<webview> tag', function () {
         }
         if (final) done()
       })
-      w.loadURL(`file://${fixtures}/pages/webview-custom-zoom-level.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-custom-zoom-level.html'))
     })
 
     it('maintains zoom level when navigating within same page', (done) => {
@@ -1642,7 +1642,7 @@ describe('<webview> tag', function () {
         assert.equal(zoomLevel, 2.0)
         if (final) done()
       })
-      w.loadURL(`file://${fixtures}/pages/webview-in-page-navigate.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-in-page-navigate.html'))
     })
 
     it('inherits zoom level for the origin when available', (done) => {
@@ -1656,7 +1656,7 @@ describe('<webview> tag', function () {
         assert.equal(zoomLevel, 2.0)
         done()
       })
-      w.loadURL(`file://${fixtures}/pages/webview-origin-zoom-level.html`)
+      w.loadFile(path.join(fixtures, 'pages', 'webview-origin-zoom-level.html'))
     })
   })
 
