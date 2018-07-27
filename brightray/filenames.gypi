@@ -75,6 +75,8 @@
       'browser/win/win32_desktop_notifications/desktop_notification_controller.h',
       'browser/win/win32_desktop_notifications/toast.cc',
       'browser/win/win32_desktop_notifications/toast.h',
+      'browser/win/win32_desktop_notifications/toast_uia.cc',
+      'browser/win/win32_desktop_notifications/toast_uia.h',
       'browser/win/win32_notification.cc',
       'browser/win/win32_notification.h',
       'browser/win/windows_toast_notification.cc',
