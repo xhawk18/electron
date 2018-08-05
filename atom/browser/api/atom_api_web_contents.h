@@ -177,7 +177,8 @@ class WebContents : public mate::TrackableObject<WebContents>,
   void TabTraverse(bool reverse);
 
   // Send messages to browser.
-  bool SendIPCMessage(bool all_frames,
+  bool SendIPCMessage(bool internal,
+                      bool send_to_all,
                       const std::string& channel,
                       const base::ListValue& args);
 
@@ -421,6 +422,7 @@ class WebContents : public mate::TrackableObject<WebContents>,
 
   // Called when received a message from renderer to be forwarded.
   void OnRendererMessageTo(content::RenderFrameHost* frame_host,
+                           bool internal,
                            bool send_to_all,
                            int32_t web_contents_id,
                            const std::string& channel,

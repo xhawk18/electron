@@ -44,6 +44,7 @@ class AtomRenderFrameObserver : public content::RenderFrameObserver {
 
  protected:
   virtual void EmitIPCEvent(blink::WebLocalFrame* frame,
+                            bool internal,
                             const std::string& channel,
                             const base::ListValue& args);
 
@@ -52,7 +53,8 @@ class AtomRenderFrameObserver : public content::RenderFrameObserver {
   void CreateIsolatedWorldContext();
   bool IsMainWorld(int world_id);
   bool IsIsolatedWorld(int world_id);
-  void OnBrowserMessage(bool send_to_all,
+  void OnBrowserMessage(bool internal,
+                        bool send_to_all,
                         const std::string& channel,
                         const base::ListValue& args);
 
