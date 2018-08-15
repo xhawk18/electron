@@ -1,0 +1,15 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index 6ebb34b68d..9d17fc30c5 100755
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -420,6 +420,10 @@ if (is_component_ffmpeg) {
+     # So we can append below and assume they're defined.
+     ldflags = []
+ 
++    if (!is_component_build && is_mac) {
++      ldflags += [ "-Wl,-install_name,@rpath/libffmpeg.dylib" ]
++    }
++
+     if (is_posix && !is_mac) {
+       # Fixes warnings PIC relocation when building as component.
+       ldflags += [

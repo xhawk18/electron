@@ -1,0 +1,6 @@
+repo: src/third_party/angle
+patches:
+-
+  owners: alespergl
+  file: dcheck.patch
+  description: null

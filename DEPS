@@ -1,16 +1,20 @@
 vars = {
   'chromium_version':
     '66.0.3359.181',
-  'libchromiumcontent_revision':
-    'd6411e421b0b2f0105d274ac4e5c90dc979463ca',
   'node_version':
     'ed9e26b86435bed3cf5e4dafa59aa90e85f7a4ab',
+
+  'pyyaml_version':
+    '3.12',
 
   'chromium_git':
     'https://chromium.googlesource.com',
 
   'electron_git':
     'https://github.com/electron',
+
+  'yaml_git':
+    'https://github.com/yaml',
 
   'checkout_nacl':
     False,
@@ -23,20 +27,20 @@ vars = {
 deps = {
   'src':
     (Var("chromium_git")) + '/chromium/src.git@' + (Var("chromium_version")),
-  'src/libchromiumcontent':
-    (Var("electron_git")) + '/libchromiumcontent.git@' + (Var("libchromiumcontent_revision")),
   'src/third_party/electron_node':
     (Var("electron_git")) + '/node.git@' + (Var("node_version")),
+  'src/electron/vendor/pyyaml':
+    (Var("yaml_git")) + '/pyyaml.git@' + (Var("pyyaml_version")),
 }
 
 hooks = [
   {
     'action': [
       'python',
-      'src/libchromiumcontent/script/apply-patches'
+      'src/electron/script/apply-patches'
     ],
     'pattern':
-      'src/libchromiumcontent',
+      'src/electron',
     'name':
       'patch_chromium'
   },
