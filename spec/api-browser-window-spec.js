@@ -1313,39 +1313,8 @@ describe('BrowserWindow module', () => {
       })
     })
 
-    describe('"disableRemoteModule" option', () => {
-      it('disables the remote module when set', async () => {
-        const preload = path.join(fixtures, 'module', 'preload-remote.js')
-        w.destroy()
-        w = new BrowserWindow({
-          show: false,
-          webPreferences: {
-            preload: preload,
-            disableRemoteModule: true
-          }
-        })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
-        const [, remote] = await emittedOnce(ipcMain, 'remote')
-        expect(remote).to.equal('undefined')
-      })
-
-      it('disables the remote module when set (sandboxed)', async () => {
-        const preload = path.join(fixtures, 'module', 'preload-remote.js')
-        w.destroy()
-        w = new BrowserWindow({
-          show: false,
-          webPreferences: {
-            preload: preload,
-            sandbox: true,
-            disableRemoteModule: true
-          }
-        })
-        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
-        const [, remote] = await emittedOnce(ipcMain, 'remote')
-        expect(remote).to.equal('undefined')
-      })
-
-      it('enables the remote module when not set', async () => {
+    describe('"enableRemoteModule" option', () => {
+      it('enables the remote module by default', async () => {
         const preload = path.join(fixtures, 'module', 'preload-remote.js')
         w.destroy()
         w = new BrowserWindow({
@@ -1359,19 +1328,50 @@ describe('BrowserWindow module', () => {
         expect(remote).to.equal('object')
       })
 
-      it('enables the remote module when not set (sandboxed)', async () => {
+      it('enables the remote module by default (sandboxed)', async () => {
         const preload = path.join(fixtures, 'module', 'preload-remote.js')
         w.destroy()
         w = new BrowserWindow({
           show: false,
           webPreferences: {
-            sandbox: true,
-            preload: preload
+            preload: preload,
+            sandbox: true
           }
         })
         w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
         const [, remote] = await emittedOnce(ipcMain, 'remote')
         expect(remote).to.equal('object')
+      })
+
+      it('disables the remote module when false', async () => {
+        const preload = path.join(fixtures, 'module', 'preload-remote.js')
+        w.destroy()
+        w = new BrowserWindow({
+          show: false,
+          webPreferences: {
+            preload: preload,
+            enableRemoteModule: false
+          }
+        })
+        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        const [, remote] = await emittedOnce(ipcMain, 'remote')
+        expect(remote).to.equal('undefined')
+      })
+
+      it('disables the remote module when false (sandboxed)', async () => {
+        const preload = path.join(fixtures, 'module', 'preload-remote.js')
+        w.destroy()
+        w = new BrowserWindow({
+          show: false,
+          webPreferences: {
+            preload: preload,
+            sandbox: true,
+            enableRemoteModule: false
+          }
+        })
+        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        const [, remote] = await emittedOnce(ipcMain, 'remote')
+        expect(remote).to.equal('undefined')
       })
     })
 

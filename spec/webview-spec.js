@@ -556,7 +556,7 @@ describe('<webview> tag', function () {
       const message = await startLoadingWebViewAndWaitForMessage(webview, {
         preload: `${fixtures}/module/preload-disable-remote.js`,
         src: `file://${fixtures}/api/blank.html`,
-        webpreferences: 'disableRemoteModule'
+        webpreferences: 'enableRemoteModule=no'
       })
 
       const types = JSON.parse(message)

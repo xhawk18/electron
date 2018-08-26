@@ -1885,7 +1885,7 @@ v8::Local<v8::Value> WebContents::GetLastWebPreferences(
 
 bool WebContents::IsRemoteModuleEnabled() const {
   if (auto* web_preferences = WebContentsPreferences::From(web_contents())) {
-    return !web_preferences->IsEnabled(options::kDisableRemoteModule, false);
+    return web_preferences->IsRemoteModuleEnabled();
   }
   return true;
 }

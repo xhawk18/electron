@@ -110,8 +110,8 @@ const char kPreloadURL[] = "preloadURL";
 // Enable the node integration.
 const char kNodeIntegration[] = "nodeIntegration";
 
-// Disable the remote module
-const char kDisableRemoteModule[] = "disableRemoteModule";
+// Enable the remote module
+const char kEnableRemoteModule[] = "enableRemoteModule";
 
 // Enable context isolation of Electron APIs and preload script
 const char kContextIsolation[] = "contextIsolation";
