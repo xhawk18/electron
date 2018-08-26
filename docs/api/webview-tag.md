@@ -131,6 +131,15 @@ integration and can use node APIs like `require` and `process` to access low
 level system resources. Node integration is disabled by default in the guest
 page.
 
+### `disableremote`
+
+```html
+<webview src="http://www.google.com/" disableremote></webview>
+```
+
+When this attribute is present the guest page in `webview` will not have access
+to the remote module. The remote module is avaiable by default.
+
 ### `plugins`
 
 ```html

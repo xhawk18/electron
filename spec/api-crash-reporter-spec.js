@@ -209,13 +209,6 @@ describe('crashReporter module', () => {
     })
   })
 
-  describe('getTempDirectory', () => {
-    it('returns temp directory for app if one is specified', () => {
-      const tempDir = crashReporter.getTempDirectory()
-      assert.equal(tempDir, app.getPath('temp'))
-    })
-  })
-
   describe('start(options)', () => {
     it('requires that the companyName and submitURL options be specified', () => {
       assert.throws(() => {

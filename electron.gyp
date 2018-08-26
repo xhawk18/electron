@@ -555,14 +555,6 @@
           './lib/sandboxed_renderer/init.js',
           '-r',
           './lib/sandboxed_renderer/api/exports/electron.js:electron',
-          '-r',
-          './lib/sandboxed_renderer/api/exports/fs.js:fs',
-          '-r',
-          './lib/sandboxed_renderer/api/exports/os.js:os',
-          '-r',
-          './lib/sandboxed_renderer/api/exports/path.js:path',
-          '-r',
-          './lib/sandboxed_renderer/api/exports/child_process.js:child_process'
         ],
         'isolated_args': [
           'lib/isolated_renderer/init.js',

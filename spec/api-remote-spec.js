@@ -479,7 +479,6 @@ describe('remote module', () => {
       try {
         throwFunction(err)
       } catch (error) {
-        assert.ok(error.from)
         assert.deepEqual(error.cause, err)
       }
     })
